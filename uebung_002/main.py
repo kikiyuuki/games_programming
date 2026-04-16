@@ -21,8 +21,11 @@ clock = pygame.time.Clock()
 player_x = 100.0
 player_y = 100.0
 player_radius = 20
+player_jump_force = 100
+player_movement_y = 0.0
 player_moving_left = False
 player_moving_right = False
+player_jumping = False
 player_collider = pygame.Rect(player_x - player_radius, player_y - player_radius, player_radius * 2, player_radius * 2)
 player_gravity = 0.1
 
@@ -74,12 +77,19 @@ while running:
                 player_moving_left = True
             elif event.key == pygame.K_d:
                 player_moving_right = True
+            elif event.key == pygame.K_SPACE:
+                player_jumping = True
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a:
                 player_moving_left = False
             elif event.key == pygame.K_d:
                 player_moving_right = False
+
+  
+
+
+        
 
     # ---- Update ----
 
@@ -88,7 +98,20 @@ while running:
         player_x += 3
     elif player_moving_left:
         player_x -= 3
-    player_y += player_gravity * 8
+
+    #player-gravity
+    player_movement_y += player_gravity
+    player_y += player_movement_y
+
+    # Player-Jump
+    if player_jumping:
+        player_gravity = 0
+        player_y -= player_jump_force
+        player_jumping = False
+    
+    #if not player_jumping:
+       # player_gravity = 0.1
+
 
     # Bouncing circle: Gravitation + Bewegung
     circle_movement_y += gravity
@@ -110,7 +133,9 @@ while running:
 
     #Ground Kollision
     if checkCollision(player_collider, obstacles):
-        player_y -= player_gravity * 8
+        player_gravity = 0
+        player_movement_y = 0
+        player_y -= player_gravity 
 
 
 

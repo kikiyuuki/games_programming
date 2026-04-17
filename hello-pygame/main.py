@@ -1,4 +1,5 @@
 import pygame
+import testing as test
 pygame.init()
 pygame.font.init()
 screen = pygame.display.set_mode((800, 600))
@@ -11,11 +12,19 @@ player2Color = (40, 80, 30)
 running = True
 gotCaught = False
 
+
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
 text_surface = my_font.render('Du wurdest gefangen', False, (255, 255, 255))
 
 def displayText():
     screen.blit(text_surface, (200,0))
+
+
+def spawn_player(x, y, width, height):
+    player = pygame.Rect(x, y, width, height)
+    pygame.draw.rect(screen, (255, 0, 255), player)
+    return player
+
     
 
 
@@ -29,7 +38,7 @@ while running:
     if keys[pygame.K_RIGHT]: player1posX += 5
     if keys[pygame.K_UP]:    player1posY -= 5
     if keys[pygame.K_DOWN]:  player1posY += 5
-    if keys[pygame.K_SPACE]: player1Color = (255, 255, 255)
+    if keys[pygame.K_SPACE]: player3 = spawn_player(player1posX, player1posY, 40, 40)
 
     if keys[pygame.K_w]: player2posY -= 5
     if keys[pygame.K_s]: player2posY += 5

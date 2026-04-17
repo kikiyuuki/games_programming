@@ -109,8 +109,8 @@ while running:
         player_y -= player_jump_force
         player_jumping = False
     
-    #if not player_jumping:
-       # player_gravity = 0.1
+    if not player_jumping:
+       player_gravity = 0.1
 
 
     # Bouncing circle: Gravitation + Bewegung
